@@ -238,6 +238,24 @@ There's already precendence outside of web3 for software-only based enclaves. Fo
         UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="2")
 ```
 
+#### Hierarchial Derivation Wallets (HD Wallets)
+
+For interoperability purposes, HD Wallets should be supported since they are a core component of most distributed ledger and blockchain wallet systems. Also they add properties that could benefit a wider range of other use cases (i.e Identity and payment flows) as they offer the ability to derive keys for different purposes and they possible number of keys from a single root seed is practically infinite.
+
+##### Relevant Standards
+
+- [BIP39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki): Initially for proposed for Bitcoin wallets, but now widely adopted across multiple blockchains and other use cases; it defines a method for generating a mnemonic phrase (a group of easy-to-remember words) that can be used to derive a binary seed. This seed is then used to generate a hierarchical tree of keys.This is the de-factor **seret** that the user is **responsible** to back up and secure himself when using a self-custodial wallet.
+
+- [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki): Defines the process in which we go from a seed to a hierarchical tree of keys. It defines how to derive child keys from parent keys using a combination of the parent key, a chain code, and an index. It supports both hardened and non-hardened derivation.
+    - [hardening vs non-hardened derivation](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki#public-parent-key--public-child-key)
+
+    - Different implementations of BIP32 are dependent on the elliptic curve used (i.e ECDSA vs EdDSA)
+        - BIP32-Ed25519 Reference Doc: https://ieeexplore.ieee.org/document/7966967
+
+    - Image Reference: ![HD Wallet Derivation Path](https://github.com/bitcoin/bips/raw/master/bip-0032/derivation.png)
+
+- [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki): Builds upon BIP32 and defines a specific hierarchy for organizing keys within a wallet. It introduces the concept of "accounts" and specifies a standard path structure for deriving keys for different cryptocurrencies and purposes. The path structure is defined as m / purpose' / coin_type' / account' / change / address_index.
+
 #### OS Specifics
 
 The examples above are conceptual designs and not **prescriptive**. We need to consider the specifics of the OS we are running on. For example,
